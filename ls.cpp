@@ -55,9 +55,13 @@ void ls(char* path)
         strcpy(buf, path);
         char* p = buf + strlen(buf);
         *p++ = '/';
-        while(read(fd, &de))
+        DIR* dp = opendir(path);
+        struct dirent* filename;
+        while(filename = readdir(dp))
         {
-
+            memcmp(p, filename->d_name, sizeof(filename->d_name));
+            p[sizeof(filename->d_name)] = 0;
+            printf("%s %d %d\n", filename->d_name, filename->d_type, filename->d_ino);
         }
     }
 }
